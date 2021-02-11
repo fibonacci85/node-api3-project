@@ -1,14 +1,19 @@
 const express = require('express');
-
 const router = express.Router();
+const Users = require('./users-model');
+const mw = require('../middleware/middleware');
 
-router.get('/', (req, res) => {
-  // RETURN AN ARRAY WITH ALL THE USERS
+router.get('/', mw.validateUser, (req, res) => {
+  Users.get(req.body)
+  .then(user => {
+    res.status(200).json(user)
+  })
 });
+//////^^^^ I'M NOT SURE.... App keeps crashing. 
 
 router.get('/:id', (req, res) => {
   // RETURN THE USER OBJECT
-  // this needs a middleware to verify user id
+  // this needs a middleware to vserify user id
 });
 
 router.post('/', (req, res) => {
